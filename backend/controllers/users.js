@@ -62,7 +62,6 @@ module.exports.login = handleAsync(async (req, res) => {
     expiresIn: "30d",
   });
   const { password, ...rest } = user.toJSON();
-  // if (!rest?.isActive) throw new Error("Please verify your email");
 
   res.send({ success: true, user: rest, token });
 });
