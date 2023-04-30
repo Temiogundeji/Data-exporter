@@ -65,3 +65,4 @@ module.exports.login = handleAsync(async (req, res) => {
 
   res.send({ success: true, user: rest, token });
 });
+

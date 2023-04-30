@@ -1,11 +1,15 @@
 const mongoose = require("mongoose");
-const { isEmail } = require("validator");
 
 const DatabaseSchema = new mongoose.Schema(
   {
-    connection_string: {
+    connString: {
       type: String,
       required: [true, "Please username last name"],
+    },
+    organizationId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Organization",
+      required: [true, "Please include organization ID"],
     },
   },
   { toJSON: { virtuals: true }, toObject: { virtuals: true }, timestamps: true }

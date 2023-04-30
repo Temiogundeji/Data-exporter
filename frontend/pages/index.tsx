@@ -1,34 +1,24 @@
 import Image from 'next/image'
 import { Inter } from 'next/font/google'
+import { useForm } from 'react-hook-form'
+import { useState } from 'react';
+import AppBar from '@/components/AppBar';
 
 const inter = Inter({ subsets: ['latin'] })
 
+type FormData = {
+  email: string,
+  password: string
+}
+
 export default function Home() {
+  const { register, setValue, handleSubmit, formState: { errors } } = useForm<FormData>();
+  const [loading, setLoading] = useState(false);
+  const onSubmit = handleSubmit(data => console.log(data));
   return (
     <main className="flex min-h-screen flex-col items-center justify-between p-24 overflow-y-hidden">
-      <div className='overflow-y-hidden'>
-        <span className='font-bold text-2xl'>Xportt</span>
-        <div className='flex flex-row justify-between items-center rounded-lg '>
-          <div className='w-1/2'>
-            <h1 className='text-4xl font-bold mb-2'>Data Exporter</h1>
-            <p className='text-left text-lg'>Making data export easier for teams for free. It supports common data formats like csv, and xlsx</p>
-          </div>
-          <div>
-            <header>
-              <h2 className='text-black text-2xl text-left'>Login here</h2>
-            </header>
-            <div className='flex items-center justify-center flex-col bg-white h-[400px] w-[400px] rounded-lg px-5'>
-              <div className='mb-10'>
-                <input className='text-black w-full' type='text' placeholder='Username or Email' />
-              </div>
-              <div>
-                <input className='text-black w-full' type='password' placeholder='**********' />
-              </div>
-            </div>
-          </div>
 
-        </div>
-      </div>
+      <h1 className="text-white">My name is Yusuff</h1>
     </main>
   )
 }
