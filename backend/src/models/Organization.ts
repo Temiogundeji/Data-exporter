@@ -1,13 +1,13 @@
 const mongoose = require("mongoose");
 const { isEmail } = require("validator");
 
-const UserSchema = new mongoose.Schema(
+const OrganizationSchema = new mongoose.Schema(
   {
-    username: {
+    name: {
       type: String,
       required: [true, "Please username last name"],
     },
-    email: {
+    about: {
       type: String,
       unique: true,
       validate: [isEmail, "Please add a valid email address"],
@@ -15,12 +15,10 @@ const UserSchema = new mongoose.Schema(
       lowercase: true,
       trim: true,
     },
-    gender: {
-      type: String,
-      enum: ["male", "female"],
-    },
-    phoneNumber: {
-      type: String,
+    adminId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+      required: [true, "Please include admin"],
     },
     password: {
       type: String,
@@ -29,4 +27,4 @@ const UserSchema = new mongoose.Schema(
   { toJSON: { virtuals: true }, toObject: { virtuals: true }, timestamps: true }
 );
 
-module.exports = mongoose.model("User", UserSchema);
+export default mongoose.model("Organization", OrganizationSchema);

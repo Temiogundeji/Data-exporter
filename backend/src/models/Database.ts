@@ -1,18 +1,19 @@
-const mongoose = require("mongoose");
+import mongoose from "mongoose";
 
-const DatabaseSchema = new mongoose.Schema(
+const CredentialsSchema = new mongoose.Schema(
   {
     connString: {
       type: String,
-      required: [true, "Please username last name"],
+      required: [true, "Please password"],
     },
     organizationId: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Organization",
       required: [true, "Please include organization ID"],
     },
+
   },
   { toJSON: { virtuals: true }, toObject: { virtuals: true }, timestamps: true }
 );
 
-module.exports = mongoose.model("Database", DatabaseSchema);
+export default mongoose.model("Database", CredentialsSchema);

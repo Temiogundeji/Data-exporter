@@ -1,0 +1,46 @@
+import http from "http";
+import express, { Application, Request, Response } from 'express';
+import { createHttpTerminator } from 'http-terminator';
+import bodyParser from 'body-parser';
+import helmet from 'helmet';
+import dotenv from 'dotenv';
+import "./process";
+import { env } from "./config";
+
+dotenv.config();
+
+const PORT = process.env.PORT || 5000;
+export const app: Application = express();
+
+export const server = http.createServer(app);
+
+app.use(helmet());
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+
+app.get('/', (req: Request, res: Response) => {
+  res.send(
+    `${env.environment === 'production'
+      ? 'Welcome to xportt production environment'
+      : 'Welcome to xportt development environment'
+    }`
+  );
+});
+
+app.all('/*', (req: Request, res: Response, next) => {
+  next(new Error('Resource unavailable'));
+});
+
+app.use((err: any, req: Request, res: Response) => {
+  res.status(400).send({
+    success: false,
+    message: err.message.toLowerCase().includes('duplicate key')
+      ? 'Account already exists'
+      : err.message,
+  });
+});
+
+export const httpTerminator = createHttpTerminator({
+  server,
+});
+

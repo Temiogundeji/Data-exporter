@@ -19,4 +19,4 @@ const HistorySchema = new mongoose.Schema(
   { toJSON: { virtuals: true }, toObject: { virtuals: true }, timestamps: true }
 );
 
-module.exports = mongoose.model("History", HistorySchema);
+export default mongoose.model("History", HistorySchema);
