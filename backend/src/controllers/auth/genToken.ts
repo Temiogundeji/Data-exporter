@@ -5,7 +5,7 @@ import { customAlphabet } from 'nanoid';
 import { numbers } from 'nanoid-dictionary';
 import mailer from '../../utils/mailer';
 import User from '../../models/User';
-import { ResponseCode, ResponseType, StatusCode } from '../../../@types';
+import { ResponseCode, ResponseType, StatusCode } from '../../@types';
 import { Toolbox } from '../../utils';
 
 const { apiResponse } = Toolbox;

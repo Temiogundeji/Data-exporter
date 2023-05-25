@@ -1,5 +1,5 @@
 import User from '../models/User';
-import { IUser } from '../../@types';
+import { IUser } from '../@types';
 import { AppError, HttpCode } from '../exceptions/AppError';
 
 class UserService {

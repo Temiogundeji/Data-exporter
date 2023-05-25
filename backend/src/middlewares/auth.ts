@@ -1,20 +1,16 @@
 import { Request, Response, NextFunction } from 'express';
 import jwt from 'jsonwebtoken';
 import User from '../models/User';
-import { ResponseCode, ResponseType } from '../../@types';
+import { ResponseCode, ResponseType } from '../@types';
 import { AppError, StatusCode, Toolbox } from '../utils';
 import { HttpCode } from '../exceptions/AppError';
 import { env } from '../config';
-import { IUser } from '../../@types/user';
+import { IUser } from '../@types/user';
 
 const { apiResponse, isXDaysFromNow } = Toolbox;
 
-interface AuthenticatedRequest extends Request {
-    user: IUser;
-}
-
 const Authentications = {
-    async authenticate(req: AuthenticatedRequest, res: Response, next: NextFunction) {
+    async authenticate(req: Request, res: Response, next: NextFunction) {
         try {
             const authToken = req.headers.authorization;
             if (!authToken)
@@ -49,7 +45,7 @@ const Authentications = {
                         description: 'This account has been deleted. Please contact support',
                     }
                 );
-            req.user = user;
+            req.user = user as any;
             next();
         } catch (error: any) {
             return apiResponse(

@@ -6,7 +6,7 @@ import jwt from 'jsonwebtoken';
 import mailer from '../../utils/mailer';
 import User from '../../models/User';
 import { env } from '../../config';
-import { ResponseCode, ResponseType, StatusCode } from '../../../@types';
+import { ResponseCode, ResponseType, StatusCode } from '../../@types';
 import { AppError, HttpCode } from '../../exceptions/AppError';
 import { Toolbox } from "../../utils";
 

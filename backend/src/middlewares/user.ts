@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from 'express';
-import { RegisterType, ResponseCode, ResponseType, StatusCode } from '../@types';
+import { RegisterType, ResponseCode, StatusCode, ResponseType } from '../@types';
 import { Toolbox } from '../utils';
 import userValidations from '../validations/users';
 

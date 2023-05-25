@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { ResponseCode, ResponseType, StatusCode, IUser } from '../../../@types';
+import { ResponseCode, ResponseType, StatusCode, IUser } from '../../@types';
 import { Toolbox } from '../../utils';
 import { userService } from '../../services';
 

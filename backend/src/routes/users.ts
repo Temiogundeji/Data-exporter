@@ -1,24 +1,13 @@
-import express from 'express';
-import AuthController from '../controllers/auth';
-import { UserMiddleware } from '../middlewares';
+import express from "express";
+import { Uploader } from "../middlewares";
+import getUser from "../controllers/users/getUser";
+import upload from "../controllers/users/upload";
 
 const router = express.Router();
 
-const { signup, login, genToken, newPassword, verifyToken, resendEmail, softDeleteUser } =
-    AuthController;
-const {
-    inspectRegisterUser,
-    inspectAuthRoutes,
-    inspectVerifyToken,
-    inspectToggleActivationStatus,
-} = UserMiddleware;
+router.get('/me', getUser);
+// router.post('/reset', resetPin);
+router.post('/upload', Uploader.single('image'), upload);
 
-router.post('/signup', inspectRegisterUser, signup);
-router.post('/login', inspectAuthRoutes, login);
-router.post('/token', inspectAuthRoutes, genToken);
-router.post('/password', inspectAuthRoutes, newPassword);
-router.post('/login/resend', inspectAuthRoutes, resendEmail);
-router.get('/verify', inspectVerifyToken, verifyToken);
-router.patch('/status', inspectToggleActivationStatus, softDeleteUser);
 
 export default router;

@@ -4,7 +4,7 @@ import jwt from 'jsonwebtoken';
 import fs from 'fs';
 import mailer from '../../utils/mailer';
 import User from '../../models/User';
-import { ResponseCode, ResponseType, StatusCode } from '../../../@types';
+import { ResponseCode, ResponseType, StatusCode } from '../../@types';
 import { Toolbox } from '../../utils';
 
 const { apiResponse } = Toolbox;

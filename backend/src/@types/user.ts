@@ -22,14 +22,9 @@ export interface IUser extends Document {
 }
 
 export type RegisterType = {
-    phoneNumber: string;
+    username: string;
     email: string;
-    firstName: string;
-    lastName: string;
     password: string;
-    gender: string;
-    referer?: string;
-    dob: string;
 };
 
 export type ChangeStatusType = {

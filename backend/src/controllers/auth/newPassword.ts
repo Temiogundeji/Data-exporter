@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 import bcrypt from 'bcrypt';
 import User from '../../models/User';
-import { ResponseCode, ResponseType, StatusCode } from '../../../@types';
+import { ResponseCode, ResponseType, StatusCode } from '../../@types';
 import { AppError } from '../../utils';
 import { Toolbox } from '../../utils';
 

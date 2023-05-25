@@ -8,7 +8,7 @@ import {
     applicationJsonType,
     applicationXmlType,
     APIResponseType,
-} from '../../@types';
+} from '../@types';
 const Tools = {
     countries: [
         ['Afghanistan', 'AF', 'AFG', '004'],

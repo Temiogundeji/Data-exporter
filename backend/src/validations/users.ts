@@ -1,6 +1,6 @@
 import Joi from 'joi';
 import joiDate from '@joi/date';
-import { ChangeStatusType, RegisterType } from '../../@types';
+import { ChangeStatusType, RegisterType } from '../@types';
 
 const joi = Joi.extend(joiDate);
 
