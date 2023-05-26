@@ -45,7 +45,7 @@ const Authentications = {
                         description: 'This account has been deleted. Please contact support',
                     }
                 );
-            req.user = user as any;
+            req.user = user;
             next();
         } catch (error: any) {
             return apiResponse(

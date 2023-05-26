@@ -6,10 +6,10 @@ import helmet from 'helmet';
 import dotenv from 'dotenv';
 import "./process";
 import { env } from "./config";
+import routes from "./routes";
 
 dotenv.config();
 
-const PORT = process.env.PORT || 5000;
 export const app: Application = express();
 
 export const server = http.createServer(app);
@@ -26,6 +26,8 @@ app.get('/', (req: Request, res: Response) => {
     }`
   );
 });
+
+app.use('/exportt/api/v1', routes);
 
 app.all('/*', (req: Request, res: Response, next) => {
   next(new Error('Resource unavailable'));

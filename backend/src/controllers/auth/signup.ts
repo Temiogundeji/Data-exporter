@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 import path from 'path';
 import fs from 'fs';
-import { customAlphabet } from 'nanoid';
+// import { customAlphabet } from 'nanoid';
 import { numbers } from 'nanoid-dictionary';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
@@ -15,7 +15,7 @@ import { userService } from '../../services';
 const { apiResponse } = Toolbox;
 const { APP_BASE_URL } = env;
 
-const nanoid = customAlphabet(numbers, 5);
+// const nanoid = customAlphabet(numbers, 5);
 
 const signUpHTML = fs.readFileSync(path.join(__dirname, '../../templates/signup.html'), {
   encoding: 'utf-8',
@@ -23,7 +23,7 @@ const signUpHTML = fs.readFileSync(path.join(__dirname, '../../templates/signup.
 
 async function signup(req: Request, res: Response) {
   try {
-    const { phoneNumber, email, firstName, lastName, pin, gender, referer, dob } = req.body as any;
+    const { email, firstName, lastName, password } = req.body as any;
 
     const existingUser = await userService.getUserByEmail(email);
 
@@ -38,29 +38,24 @@ async function signup(req: Request, res: Response) {
       );
     }
 
-    const referralId = `${firstName}-${nanoid()}`.toLowerCase();
+    // const referralId = `${firstName}-${nanoid()}`.toLowerCase();
     const tempToken = jwt.sign({ email }, env.JWT_SECRET as string as string, {
       expiresIn: '7d',
     });
     const redirectUrl = `${APP_BASE_URL}/auth/verify?token=${tempToken}`;
 
-    const newUser = await User.create({
-      phoneNumber,
+    await User.create({
       firstName,
       lastName,
-      pin: bcrypt.hashSync(String(pin), 10),
+      password: bcrypt.hashSync(String(password), 10),
       email,
-      gender,
-      referralId: referralId,
-      referer: referer ? referer : '',
-      dob,
-      expiresIn: new Date(new Date().setDate(new Date().getDate() + 7)),
+      // expiresIn: new Date(new Date().setDate(new Date().getDate() + 7)),
     });
 
-    logger('redirect url', redirectUrl);
+    // logger(redirectUrl, 'redirect url');
     await mailer(
       email,
-      'Verify your Pebblescore account',
+      'Verify your Xportt account',
       signUpHTML.replace('{{NAME}}', `${firstName}`).replace('{{LINK}}', redirectUrl)
     );
 
@@ -69,7 +64,7 @@ async function signup(req: Request, res: Response) {
       ResponseType.SUCCESS,
       StatusCode.OK,
       ResponseCode.SUCCESS,
-      'Registration successful.'
+      'Registration successful.',
     );
   } catch (error) {
     return apiResponse(

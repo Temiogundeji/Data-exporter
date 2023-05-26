@@ -6,7 +6,7 @@ const myFormat = printf(
     ({ level, message, label, timestamp }) => `${timestamp} || [${label}] || ${level}: ${message}`
 );
 
-const logger = async (action: string, message: string) => {
+const log = async (action: string, message: string) => {
     const logger = createLogger({
         format: combine(label({ label: `tracking action: ${action}` }), timestamp(), myFormat),
         transports: [new transports.Console()],
@@ -15,4 +15,4 @@ const logger = async (action: string, message: string) => {
     logger.log({ level: 'info', message });
 };
 
-export default logger;
+export default log;

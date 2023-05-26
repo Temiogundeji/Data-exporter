@@ -1,16 +1,13 @@
 import { Request, Response } from 'express';
 import path from 'path';
 import fs from 'fs';
-import { customAlphabet } from 'nanoid';
-import { numbers } from 'nanoid-dictionary';
 import mailer from '../../utils/mailer';
 import User from '../../models/User';
 import { ResponseCode, ResponseType, StatusCode } from '../../@types';
 import { Toolbox } from '../../utils';
+import { generateAuthToken } from '../../utils/helpers';
 
 const { apiResponse } = Toolbox;
-
-const nanoid = customAlphabet(numbers, 5);
 
 const resetBody = fs.readFileSync(path.join(__dirname, '/../../templates/user.html'), {
   encoding: 'utf-8',
@@ -18,7 +15,7 @@ const resetBody = fs.readFileSync(path.join(__dirname, '/../../templates/user.ht
 
 async function genToken(req: Request, res: Response) {
   try {
-    const tempToken = nanoid();
+    const tempToken = generateAuthToken(5);
 
     const user = await User.findOneAndUpdate(
       { email: req.body.email },

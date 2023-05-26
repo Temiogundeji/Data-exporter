@@ -12,7 +12,7 @@ mongoose
   .then(() => {
     const server: any = app.listen(PORT, () => {
       const { port, address } = server.address() as AddressInfo;
-      logger.info(`Server is running on http://${address}:${port}`);
+      logger.info(`Server is running on http://${address}${port}`);
     });
   })
   .catch((err: Error) => {

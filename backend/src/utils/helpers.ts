@@ -1,37 +1,38 @@
-const bcrypt = require("bcrypt");
-const saltRounds = 10;
+import bcrypt from "bcrypt";
+import crypto from 'crypto';
+const SALT_ROUNDS = 10;
 
 export async function hashString(myString: string) {
-  const hashedString = await bcrypt.hash(myString, saltRounds);
+  const hashedString = await bcrypt.hash(myString, SALT_ROUNDS);
   return hashedString;
 }
 
-hashString("my secret string")
-  .then((result) => {
-    console.log("Hashed string:", result);
-  })
-  .catch((err) => {
-    console.error(err);
-  });
+// hashString("my secret string")
+//   .then((result) => {
+//     console.log("Hashed string:", result);
+//   })
+//   .catch((err) => {
+//     console.error(err);
+//   });
 
 export async function verifyString(myString: string, hashedString: string) {
   const match = await bcrypt.compare(myString, hashedString);
   return match;
 }
 
-const hashedString =
-  "$2b$10$qWgO/f7kgLTuc5X5z5E5/OIc5zK0lZGt88xJtqHUTThmGYQg1euXm";
-verifyString("my secret string", hashedString)
-  .then((result) => {
-    if (result) {
-      console.log("Strings match.");
-    } else {
-      console.log("Strings do not match.");
-    }
-  })
-  .catch((err) => {
-    console.error(err);
-  });
+// const hashedString =
+//   "$2b$10$qWgO/f7kgLTuc5X5z5E5/OIc5zK0lZGt88xJtqHUTThmGYQg1euXm";
+// verifyString("my secret string", hashedString)
+//   .then((result) => {
+//     if (result) {
+//       console.log("Strings match.");
+//     } else {
+//       console.log("Strings do not match.");
+//     }
+//   })
+//   .catch((err) => {
+//     console.error(err);
+//   });
 
 
 /**
@@ -53,3 +54,13 @@ export const base64Decode = (base64EncodedString: string) => {
   const decodedString = Buffer.from(base64EncodedString, "base64").toString();
   return decodedString;
 }
+
+/**
+ * @param length {number} -Specify the length of the token to be generated
+ * @returns {string}
+ */
+export const generateAuthToken = (length: number): string => {
+  const token = crypto.randomBytes(length).toString('hex');
+  return token;
+}
+

@@ -3,7 +3,7 @@ import crypto from 'crypto';
 import moment from 'moment';
 import { getReasonPhrase, StatusCodes } from "http-status-codes";
 import { parse } from 'js2xmlparser';
-import { logger } from './logger';
+import log from '../config/logger';
 import {
     applicationJsonType,
     applicationXmlType,
@@ -277,7 +277,7 @@ const Tools = {
             responseMessage: responseMessage || getReasonPhrase(statusCode),
             details: data,
         };
-        logger('tracing...', responseMessage || JSON.stringify(data) || 'unknown error');
+        log('tracing...', responseMessage || JSON.stringify(data) || 'unknown error');
         return res.format({
             json: () => {
                 res.type(applicationJsonType);
