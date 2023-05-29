@@ -49,15 +49,16 @@ async function signup(req: Request, res: Response) {
       lastName,
       password: bcrypt.hashSync(String(password), 10),
       email,
+      tempToken: tempToken
       // expiresIn: new Date(new Date().setDate(new Date().getDate() + 7)),
     });
 
     // logger(redirectUrl, 'redirect url');
-    await mailer(
-      email,
-      'Verify your Xportt account',
-      signUpHTML.replace('{{NAME}}', `${firstName}`).replace('{{LINK}}', redirectUrl)
-    );
+    // await mailer(
+    //   email,
+    //   'Verify your Xportt account',
+    //   signUpHTML.replace('{{NAME}}', `${firstName}`).replace('{{LINK}}', redirectUrl)
+    // );
 
     return apiResponse(
       res,

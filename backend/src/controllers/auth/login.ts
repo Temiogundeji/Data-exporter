@@ -27,19 +27,39 @@ async function login(req: Request, res: Response) {
         let user = await User.findOne({
             email: req.body.email,
         })
-        if (!user || !bcrypt.compareSync(String(req.body.pin), user.pin)) {
+        if (!user || !bcrypt.compareSync(String(req.body.password), user.password)) {
             throw new AppError({ httpCode: HttpCode.UNAUTHORIZED, description: 'Invalid credentials', });
         }
 
-        if (user.hasLoggedIn === false && user.isActive) {
+        if (user.hasLoggedIn === false && !user.isActive) {
+            user.hasLoggedIn = true;
+            //update this to verify user through email
+            user.isActive = true;
             try {
-                await mailer(
-                    user.email,
-                    'Welcome to Xportt!',
-                    userHtml.replace(`{{NAME}}`, `${user.firstName}`)
-                );
-                user.hasLoggedIn = true;
+                // await mailer(
+                //     user.email,
+                //     'Welcome to Xportt!',
+                //     userHtml.replace(`{{NAME}}`, `${user.firstName}`)
+                // );
+                
+                // const tempToken = jwt.sign(
+                //     { email: req.body.email },
+                //     env.JWT_SECRET as string as string,
+                //     {
+                //         expiresIn: '7d',
+                //     }
+                // );
                 await user.save();
+                const { password, ...rest } = user;
+
+                return apiResponse(
+                    rest,
+                    ResponseType.SUCCESS,
+                    StatusCode.OK,
+                    ResponseCode.SUCCESS,
+                    {},
+                    'Login Successful'
+                );
             } catch (error) {
                 throw new AppError({
                     httpCode: HttpCode.INTERNAL_SERVER_ERROR, description: "Something went wrong"
@@ -56,29 +76,29 @@ async function login(req: Request, res: Response) {
                 user.expiresIn = new Date(new Date().setDate(new Date().getDate() + 7));
                 await user.save();
 
-                const tempToken = jwt.sign(
-                    { email: req.body.email },
-                    env.JWT_SECRET as string as string,
-                    {
-                        expiresIn: '7d',
-                    }
-                );
+                // const tempToken = jwt.sign(
+                //     { email: req.body.email },
+                //     env.JWT_SECRET as string as string,
+                //     {
+                //         expiresIn: '7d',
+                //     }
+                // );
 
-                const redirectUrl = `${APP_BASE_URL}/auth/verify?token=${tempToken}`;
+                // const redirectUrl = `${APP_BASE_URL}/auth/verify?token=${tempToken}`;
 
-                await mailer(
-                    req.body.email,
-                    'Verify your Xportt account',
-                    signUpHTML.replace('{{NAME}}', `${user.firstName}`).replace('{{LINK}}', redirectUrl)
-                );
+                // await mailer(
+                //     req.body.email,
+                //     'Verify your Xportt account',
+                //     signUpHTML.replace('{{NAME}}', `${user.firstName}`).replace('{{LINK}}', redirectUrl)
+                // );
             }
-            return apiResponse(
-                res,
-                ResponseType.FAILURE,
-                StatusCode.UNAUTHORIZED,
-                ResponseCode.FAILURE,
-                'Please verify your account by clicking the link we have sent to your email'
-            );
+            // return apiResponse(
+            //     res,
+            //     ResponseType.FAILURE,
+            //     StatusCode.UNAUTHORIZED,
+            //     ResponseCode.FAILURE,
+            //     'Please verify your account by clicking the link we have sent to your email'
+            // );
         }
 
         const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET as string as string, {

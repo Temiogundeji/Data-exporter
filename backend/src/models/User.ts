@@ -9,7 +9,7 @@ const UserSchema = new mongoose.Schema(
     },
     lastName: {
       type: String,
-      required: [true, "Please provide last last"],
+      required: [true, "Please provide lastName"],
     },
     email: {
       type: String,
@@ -21,6 +21,12 @@ const UserSchema = new mongoose.Schema(
     },
     password: {
       type: String,
+    },
+    tempToken: Object,
+    isActive: {
+      type: Boolean,
+      required: [true],
+      default: false,
     },
   },
   { toJSON: { virtuals: true }, toObject: { virtuals: true }, timestamps: true }
