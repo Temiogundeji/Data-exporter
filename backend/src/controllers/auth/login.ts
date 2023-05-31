@@ -74,6 +74,8 @@ async function login(req: Request, res: Response) {
                 new Date().toLocaleDateString('en-CA')
             ) {
                 user.expiresIn = new Date(new Date().setDate(new Date().getDate() + 7));
+                //Implement real verificatin through email
+                user.isActive = true;
                 await user.save();
 
                 // const tempToken = jwt.sign(
