@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import { base64Encode } from "../utils/helpers";
 
 const CredentialsSchema = new mongoose.Schema(
   {
@@ -35,9 +36,19 @@ const CredentialsSchema = new mongoose.Schema(
       ref: "Organization",
       required: [true, "Please include organization ID"],
     },
-
   },
-  { toJSON: { virtuals: true }, toObject: { virtuals: true }, timestamps: true }
+  { toJSON: { virtuals: true }, toObject: { virtuals: true }, timestamps: true },
 );
+
+CredentialsSchema.pre("save", function (next) {
+  const credential = this;
+  if (!credential) {
+    const error = new Error("credential not provided");
+    next(error);
+  }
+  credential.username = base64Encode(String(credential.username));
+  credential.password = base64Encode(String(credential.password));
+  credential.clusterName = base64Encode(String(this.clusterName));
+})
 
 export default mongoose.model("Credential", CredentialsSchema);
