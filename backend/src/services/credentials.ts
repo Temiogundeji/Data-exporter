@@ -2,6 +2,7 @@ import Credential from "../models/Credential";
 import { ICredential } from "../@types";
 import { AppError } from "../utils";
 import { HttpCode } from "../exceptions/AppError";
+import { ObjectId } from "mongodb";
 
 class CredentialService {
     async createCredential(credData: ICredential) {
@@ -32,7 +33,7 @@ class CredentialService {
         }
     }
 
-    async updateCredential(credentialId: string, credentialData: ICredential) {
+    async updateCredential(credentialId: ObjectId, credentialData: ICredential) {
         try {
             const credential = await Credential.findByIdAndUpdate(credentialId, credentialData, {
                 new: true
@@ -48,7 +49,7 @@ class CredentialService {
         }
     }
 
-    async deleteCredential(credentialId: string) {
+    async deleteCredential(credentialId: ObjectId) {
         try {
             const credential = await Credential.findByIdAndDelete(credentialId);
             if (!credential) throw new Error("Credential not found");

@@ -19,10 +19,16 @@ const UserSchema = new mongoose.Schema(
       lowercase: true,
       trim: true,
     },
+    organizationId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Organization",
+      required: [true, "Please include organization ID"],
+    },
     password: {
       type: String,
     },
     tempToken: Object,
+
     isActive: {
       type: Boolean,
       required: [true],

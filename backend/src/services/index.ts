@@ -1,3 +1,4 @@
 import userService from './users';
+import credentialService from './credentials';
 
-export { userService };
+export { userService, credentialService };
