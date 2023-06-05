@@ -1,5 +1,6 @@
 export * from "./user";
-export * from "./credential"
+export * from "./credential";
+export * from "./organization";
 
 export const applicationJsonType = 'application/json';
 
