@@ -11,9 +11,8 @@ export interface IUser extends Document {
     state?: string;
     country: string;
     dob?: string;
-    bvn?: number;
     phoneNumber?: string;
-    pin?: string;
+    password?: string;
     tempToken?: string;
     image?: string;
     loading?: boolean;

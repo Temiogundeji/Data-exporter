@@ -13,8 +13,8 @@ async function addOrganization(req: Request, res: Response, next: NextFunction) 
             httpCode: HttpCode.UNAUTHORIZED,
             description: "Invalid organization"
         });
-        if (appUser.organizationId !== req.body.adminId) {
-            throw new AppError({ httpCode: HttpCode.BAD_REQUEST, description: "Invalid Organization ID" });
+        if (appUser._id !== req.body.adminId) {
+            throw new AppError({ httpCode: HttpCode.BAD_REQUEST, description: "You do not have the permission to perform this operation." });
         }
         const newOrganization: any = await organizationService.createOrganization(req.body);
         return apiResponse(
