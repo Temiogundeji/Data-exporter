@@ -1,8 +1,6 @@
 import { Request, Response } from 'express';
 import path from 'path';
 import fs from 'fs';
-// import { customAlphabet } from 'nanoid';
-import { numbers } from 'nanoid-dictionary';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import mailer from '../../utils/mailer';
@@ -23,7 +21,7 @@ const signUpHTML = fs.readFileSync(path.join(__dirname, '../../templates/signup.
 
 async function signup(req: Request, res: Response) {
   try {
-    const { email, firstName, lastName, password } = req.body as any;
+    const { email, firstName, lastName, password, role } = req.body as any;
 
     const existingUser = await userService.getUserByEmail(email);
 
@@ -43,13 +41,13 @@ async function signup(req: Request, res: Response) {
       expiresIn: '7d',
     });
     const redirectUrl = `${APP_BASE_URL}/auth/verify?token=${tempToken}`;
-
     await User.create({
       firstName,
       lastName,
       password: bcrypt.hashSync(String(password), 10),
       email,
-      tempToken: tempToken
+      tempToken: tempToken,
+      role: role || "basic"
       // expiresIn: new Date(new Date().setDate(new Date().getDate() + 7)),
     });
 

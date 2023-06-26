@@ -1,4 +1,9 @@
-import { Document } from 'mongoose';
+import mongoose, { Document } from 'mongoose';
+
+export enum UserRole {
+    User = "user",
+    Admin = "admin"
+}
 
 export interface IUser extends Document {
     firstName: string;
@@ -18,6 +23,8 @@ export interface IUser extends Document {
     loading?: boolean;
     createdAt?: Date;
     updatedAt?: Date;
+    role: UserRole;
+    organizationId: mongoose.Schema.Types.ObjectId,
 }
 
 export type RegisterType = {

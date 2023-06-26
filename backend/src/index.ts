@@ -7,6 +7,7 @@ import dotenv from 'dotenv';
 import "./process";
 import { env } from "./config";
 import routes from "./routes";
+import checkPermissions from "./middlewares/checkPermissions";
 
 dotenv.config();
 
@@ -17,6 +18,7 @@ export const server = http.createServer(app);
 app.use(helmet());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(checkPermissions);
 
 app.get('/', (req: Request, res: Response) => {
   res.send(

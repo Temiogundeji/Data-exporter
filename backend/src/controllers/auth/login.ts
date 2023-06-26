@@ -41,7 +41,7 @@ async function login(req: Request, res: Response) {
                 //     'Welcome to Xportt!',
                 //     userHtml.replace(`{{NAME}}`, `${user.firstName}`)
                 // );
-                
+
                 // const tempToken = jwt.sign(
                 //     { email: req.body.email },
                 //     env.JWT_SECRET as string as string,
@@ -108,7 +108,7 @@ async function login(req: Request, res: Response) {
         });
         user = user.toObject();
         const { password, id, ...rest } = user;
-
+        await User.findByIdAndUpdate(user._id, { tempToken: token })
         return apiResponse(res, ResponseType.SUCCESS, StatusCode.OK, ResponseCode.SUCCESS, {
             ...rest,
             token,

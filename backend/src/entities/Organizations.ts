@@ -1,0 +1,2 @@
+import { IOrganization } from "../@types";
+

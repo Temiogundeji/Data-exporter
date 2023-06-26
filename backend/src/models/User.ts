@@ -24,11 +24,15 @@ const UserSchema = new mongoose.Schema(
       ref: "Organization",
       required: [true, "Please include organization ID"],
     },
+    role: {
+      type: String,
+      default: "user",
+      enum: ["user", "admin"]
+    },
     password: {
       type: String,
     },
-    tempToken: Object,
-
+    tempToken: { type: String },
     isActive: {
       type: Boolean,
       required: [true],
